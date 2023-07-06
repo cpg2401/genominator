@@ -4,6 +4,7 @@ import os
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import math
+import statsmodels.api as sm
 
 for dirname, _, filenames in os.walk("/kaggle/input"):
     for filename in filenames:
@@ -80,3 +81,5 @@ def weighted_regression(trait, sample_weights = features.columns, ntest = 60):
 for trait in tdf.columns:
     sample_weights = manhattan_weights(trait)
     weighted_regression(trait)
+
+model.summary()

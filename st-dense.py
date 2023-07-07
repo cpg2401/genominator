@@ -35,6 +35,12 @@ cround = np.vectorize(lambda val: enc_op[np.abs(enc_op - val).argmin()] if val n
 gdf = pd.DataFrame(cround(gdf.values), columns = gdf.columns, index = gdf.index)
 print("Done")
 
+def maic(model, predicted_labels, actual_labels):
+    rss = sum((actual_labels - predicted_labels)**2)
+    params = lambda weights: np.sum([np.prod(v.get_shape()) for v in weights])
+    aic = 2*(params(model.trainable_weights) + params(model.non_trainable_weights) - np.log(rss))
+    return np.average(aic)
+
 trait_map = {}
 
 print("COLUMN NAME\tMIN\tMAX\tRANGE\tMEAN\n---------------------------------------------")
@@ -143,6 +149,7 @@ history = History()
 epochs = 20
 
 corrs = []
+maics = []
 for trait in range(len(tdf.columns)):
     tr_labels = np.array(take(train_labels, trait)).squeeze()
     te_labels = np.array(take(test_labels, trait)).squeeze()
@@ -168,6 +175,9 @@ for trait in range(len(tdf.columns)):
     predictions = model.predict(test_inputs)
     predicted_labels = predictions.squeeze()
     actual_labels = te_labels.squeeze()
+    aic = maic(model, predicted_labels, actual_labels)
+    print("MAIC: ", aic)
+    maics.push(aic)
     print("Predicted Labels:", predicted_labels[0])
     print("Actual Labels:", actual_labels[0])
 
@@ -179,3 +189,4 @@ for trait in range(len(tdf.columns)):
     corrs.append(corr)
 
 print("Pearson scores: ", corrs)
+print("MAIC: ", np.average(np.array(maics)))

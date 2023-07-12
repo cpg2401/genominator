@@ -10,8 +10,8 @@ for dirname, _, filenames in os.walk("/kaggle/input"):
         print(os.path.join(dirname, filename))
 
 print("Loading datasets...  ", end = "")
-gdf = pd.read_csv("/kaggle/input/rice-genotype/dataset/genotype_data/12k_ld_imputed.csv")
-tdf = pd.read_csv("/kaggle/input/rice-genotype/dataset/trait_data/quantitative_traits.csv")
+gdf = pd.read_csv("../data/Kaggle Files/12k_ld_imputed.csv")
+tdf = pd.read_csv("../data/Kaggle Files/quantitative_traits.csv")
 gdf = gdf.rename(columns = {gdf.columns[0]: "ID"}).set_index("ID")
 tdf = tdf.rename(columns = {tdf.columns[0]: "ID"}).set_index("ID").fillna(method = "ffill")
 gdf = gdf[gdf.index.isin(tdf.index.values)]

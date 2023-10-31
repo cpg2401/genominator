@@ -1,2 +1,2 @@
-# Using Machine Learning to Predict Quantitative Phenotypes from Genotypes in Rice
+# GENN Rice - Using Machine Learning to Predict Quantitative Phenotypes from Genotypes in Rice
 Rice is the most important agricultural commodity on a global scale and thus understanding genetic causes and relationships for phenotypical traits in rice such as heading date is crucial. Our research project seeks to use machine learning models to offer a real solution to the inefficiency of genome association studies and eventually create a model that can reliably predict phenotypical traits for rice.
